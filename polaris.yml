@@ -1,0 +1,53 @@
+version: "1"
+project:
+  name: ${scm.git.repo}
+  branch: ${scm.git.branch}
+  revision:
+    name: ${scm.git.commit}
+    date: ${scm.git.commit.date}
+capture:
+  build:
+    cleanCommands:
+    - shell: [make, -f, Makefile, clean]
+    - shell: [msbuild, cppcheck.sln, '/t:Clean']
+    buildCommands:
+    - shell: [make, -f, Makefile]
+    - shell: [msbuild, cppcheck.sln, '/t:Build']
+    coverity:
+      cov-build: [--instrument]
+  fileSystem:
+    ears:
+      extensions: [ear]
+      files:
+      - directory: ${project.projectDir}
+    java:
+      files:
+      - directory: ${project.projectDir}
+    javascript:
+      files:
+      - directory: ${project.projectDir}
+      - excludeRegex: node_modules|bower_components|vendor
+    php:
+      files:
+      - directory: ${project.projectDir}
+    python:
+      files:
+      - directory: ${project.projectDir}
+    ruby:
+      files:
+      - directory: ${project.projectDir}
+    typescript:
+      files:
+      - directory: ${project.projectDir}
+    wars:
+      extensions: [war]
+      files:
+      - directory: ${project.projectDir}
+analyze:
+  mode: central
+  coverity:
+    cov-analyze: ["--webapp-security", "--enable-audit-mode"]
+install:
+  coverity:
+    version: default
+serverUrl: https://demo.polaris.synopsys.com

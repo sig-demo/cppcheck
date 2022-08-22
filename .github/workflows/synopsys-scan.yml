@@ -24,8 +24,9 @@ jobs:
     - name: Polaris (SAST)
       run: |
         certutil -urlcache -split -f "https://demo.polaris.synopsys.com/api/tools/polaris_cli-win64.zip" polaris.zip
+        ls
         7z e -o. polaris.zip
-        polaris.exe analyze -w
+        ./polaris.exe analyze -w
     
     
     

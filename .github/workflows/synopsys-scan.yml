@@ -19,18 +19,13 @@ jobs:
         java-version: '11'
         distribution: 'adopt'
         
-    - name: schmiddim-wget-unzip
-      uses: schmiddim/action-wget-unzip@v2
-      with:
-        url: "%POLARIS_SERVER_URL%/api/tools/polaris_cli-win64.zip"
-        destination: C:\temp
 
     # Perform Static Analysis
     - name: Polaris (SAST)
       run: |
-        curl -fLOsS $POLARIS_SERVER_URL/api/tools/polaris_cli-linux64.zip
-        unzip -d /tmp -jo polaris_cli-linux64.zip
-        /tmp/polaris analyze -w
+        certutil -urlcache -split -f "https://demo.polaris.synopsys.com/api/tools/polaris_cli-win64.zip" polaris.zip
+        7z e -o. polaris.zip
+        polaris.exe analyze -w
     
     
     

@@ -25,7 +25,7 @@ jobs:
       run: |
         certutil -urlcache -split -f "https://demo.polaris.synopsys.com/api/tools/polaris_cli-win64.zip" polaris.zip
         ls
-        7z e -oD:\cppcheck\cppcheck polaris.zip
+        7z e "-oD:\cppcheck\cppcheck" polaris.zip
         ./polaris.exe analyze -w
     
     

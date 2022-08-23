@@ -24,7 +24,7 @@ jobs:
     # Perform Static Analysis
     - name: Polaris (SAST)
       run: |
-        certutil -urlcache -split -f "%POLARIS_SERVER_URL%/api/tools/polaris_cli-win64.zip" polaris.zip
+        certutil -urlcache -split -f "$POLARIS_SERVER_URL/api/tools/polaris_cli-win64.zip" polaris.zip
         7z e "-o." polaris.zip
         ./polaris.exe analyze -w
         

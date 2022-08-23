@@ -22,11 +22,11 @@ jobs:
       uses: ilammy/msvc-dev-cmd@v1
         
     # Perform Static Analysis
- #   - name: Polaris (SAST)
-  #    run: |
-   #     certutil -urlcache -split -f "${{ secrets.POLARIS_SERVER_URL }}/api/tools/polaris_cli-win64.zip" polaris.zip
-    #    7z e "-o." polaris.zip
-     #   ./polaris.exe analyze -w
+    - name: Polaris (SAST)
+      run: |
+        certutil -urlcache -split -f "${{ secrets.POLARIS_SERVER_URL }}/api/tools/polaris_cli-win64.zip" polaris.zip
+        7z e "-o." polaris.zip
+        ./polaris.exe analyze -w
         
     # Perform Software Composition Analysis             
     - name: Black Duck (SCA)
@@ -39,4 +39,4 @@ jobs:
           --detect.code.location.name=cppcheck-main `
           --detect.blackduck.signature.scanner.snippet.matching=SNIPPET_MATCHING `
           --detect.blackduck.signature.scanner.upload.source.mode=true `
-          --detect.search.depth=3 
+          --detect.search.depth=3

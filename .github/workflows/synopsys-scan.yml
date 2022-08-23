@@ -18,15 +18,15 @@ jobs:
       with:
         java-version: '11'
         distribution: 'adopt'
+    - name: Set up Visual Studio environment
+      uses: ilammy/msvc-dev-cmd@v1
         
 
     # Perform Static Analysis
     - name: Polaris (SAST)
       run: |
         certutil -urlcache -split -f "https://demo.polaris.synopsys.com/api/tools/polaris_cli-win64.zip" polaris.zip
-        ls
         7z e "-o." polaris.zip
-        ls
         ./polaris.exe analyze -w
     
     

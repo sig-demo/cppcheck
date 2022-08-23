@@ -27,7 +27,7 @@ jobs:
         ls
         7z e "-o." polaris.zip
         ls
-        polaris.exe analyze -w
+        ./polaris.exe analyze -w
     
     
     

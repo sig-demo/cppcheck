@@ -23,12 +23,20 @@ jobs:
         
     # Perform Static Analysis
  #   - name: Polaris (SAST)
- #     run: |
-  #      certutil -urlcache -split -f "${{ secrets.POLARIS_SERVER_URL }}/api/tools/polaris_cli-win64.zip" polaris.zip
-  #      7z e "-o." polaris.zip
-  #      ./polaris.exe analyze -w
+  #    run: |
+   #     certutil -urlcache -split -f "${{ secrets.POLARIS_SERVER_URL }}/api/tools/polaris_cli-win64.zip" polaris.zip
+    #    7z e "-o." polaris.zip
+     #   ./polaris.exe analyze -w
         
     # Perform Software Composition Analysis             
     - name: Black Duck (SCA)
       run: |
-          powershell "[Net.ServicePointManager]::SecurityProtocol = 'tls12'; irm https://detect.synopsys.com/detect7.ps1?$(Get-Random) | iex; detect" --blackduck.url=$env:BLACKDUCK_URL --blackduck.api.token=$env:BLACKDUCK_API_TOKEN --detect.project.name=sig-demo/cppcheck --detect.project.version.name=main --detect.code.location.name=cppcheck-main --detect.blackduck.signature.scanner.snippet.matching=SNIPPET_MATCHING --detect.blackduck.signature.scanner.upload.source.mode=true
+          powershell "[Net.ServicePointManager]::SecurityProtocol = 'tls12'; irm https://detect.synopsys.com/detect7.ps1?$(Get-Random) | iex; detect" '
+          --blackduck.url=$env:BLACKDUCK_URL '
+          --blackduck.api.token=$env:BLACKDUCK_API_TOKEN '
+          --detect.project.name=sig-demo/cppcheck '
+          --detect.project.version.name=main '
+          --detect.code.location.name=cppcheck-main '
+          --detect.blackduck.signature.scanner.snippet.matching=SNIPPET_MATCHING '
+          --detect.blackduck.signature.scanner.upload.source.mode=true '
+          --detect.search.depth=3 

@@ -21,23 +21,20 @@ jobs:
     - name: Set up Visual Studio environment
       uses: ilammy/msvc-dev-cmd@v1
         
-
     # Perform Static Analysis
     - name: Polaris (SAST)
       run: |
-        certutil -urlcache -split -f "https://demo.polaris.synopsys.com/api/tools/polaris_cli-win64.zip" polaris.zip
+        certutil -urlcache -split -f "%POLARIS_SERVER_URL%/api/tools/polaris_cli-win64.zip" polaris.zip
         7z e "-o." polaris.zip
         ./polaris.exe analyze -w
-    
-    
-    
+        
     # Perform Software Composition Analysis             
     - name: Black Duck (SCA)
       run: |
           bash <(curl -s -L https://detect.synopsys.com/detect7.sh) '--blackduck.url=$BLACKDUCK_URL \
              --blackduck.api.token=$BLACKDUCK_API_TOKEN \
-             --detect.project.name=sig-demo/insecure-bank \
+             --detect.project.name=sig-demo/cppcheck \
              --detect.project.version.name=main \
-             --detect.code.location.name=insecure-bank-main \
+             --detect.code.location.name=cppcheck-main \
              --detect.blackduck.signature.scanner.snippet.matching=SNIPPET_MATCHING \
              --detect.blackduck.signature.scanner.upload.source.mode=true'
